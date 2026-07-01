@@ -1,0 +1,16 @@
+[
+    {
+        "type": "Release Note",
+        "date": "28 Juni 2026",
+        "title": "Pembaruan Auto-Watermark di Techcam",
+        "description": "Penambahan fitur sinkronisasi template watermark dan automasi unit/temuan pada aplikasi Techcam untuk mempercepat pelaporan dokumentasi visual.",
+        "link": "#"
+    },
+    {
+        "type": "Roadmap",
+        "date": "15 Juni 2026",
+        "title": "Porting JSEA Generator ke Desktop (Electron)",
+        "description": "Kami sedang mengembangkan versi desktop mandiri dari JSEA Maker menggunakan Electron.js untuk pengguna Windows dengan kapabilitas offline yang tangguh.",
+        "link": "#"
+    }
+]
