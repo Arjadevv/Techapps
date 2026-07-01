@@ -191,14 +191,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (typeof newsData !== 'undefined') {
         newsGrid.innerHTML = ''; // Hapus teks loading
-        newsData.forEach(item => {
+        newsData.forEach((item, index) => {
             let badgeClass = "bg-industrial/20 text-industrial";
             if (item.type.toLowerCase() === 'roadmap') {
                 badgeClass = "bg-blue-500/20 text-blue-400";
             }
 
             const cardHTML = `
-                <div class="bg-dark border border-steelLight rounded-lg p-6 hover:border-gray-500 transition-colors group cursor-pointer flex flex-col justify-between h-full">
+                <div class="bg-dark border border-steelLight rounded-lg p-6 hover:border-gray-500 transition-colors group cursor-pointer flex flex-col justify-between h-full" onclick="openNewsModal(${index})">
                     <div>
                         <div class="flex items-center gap-3 mb-4">
                             <span class="${badgeClass} text-xs font-bold px-2 py-1 rounded">${item.type}</span>
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="text-gray-400 text-sm mb-6">${item.description}</p>
                     </div>
                     <div class="mt-auto">
-                        <a href="${item.link}" class="text-sm font-medium text-industrial group-hover:underline">Baca selengkapnya</a>
+                        <button class="text-sm font-medium text-industrial group-hover:underline focus:outline-none">Baca selengkapnya</button>
                     </div>
                 </div>
             `;
@@ -218,3 +218,29 @@ document.addEventListener('DOMContentLoaded', () => {
         newsGrid.innerHTML = '<p class="text-gray-500">Gagal memuat berita terbaru.</p>';
     }
 });
+
+// --- News Modal Logic ---
+window.openNewsModal = function(index) {
+    if (typeof newsData === 'undefined' || !newsData[index]) return;
+    
+    const item = newsData[index];
+    
+    // Set Badge and Date
+    let badgeClass = "bg-industrial/20 text-industrial";
+    if (item.type.toLowerCase() === 'roadmap') {
+        badgeClass = "bg-blue-500/20 text-blue-400";
+    }
+    document.getElementById('modal-news-meta').innerHTML = `
+        <span class="${badgeClass} text-xs font-bold px-2 py-1 rounded">${item.type}</span>
+        <span class="text-xs text-gray-400">${item.date}</span>
+    `;
+    
+    // Set Title
+    document.getElementById('modal-news-title').textContent = item.title;
+    
+    // Set Full Content (fallback to description if not available)
+    document.getElementById('modal-news-content').innerHTML = item.fullContent || item.description;
+    
+    // Open Modal
+    window.openModal('modal-news');
+}

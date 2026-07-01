@@ -399,6 +399,21 @@
             </div>
             <p class="text-gray-400 text-sm mb-6 leading-relaxed">Dokumentasi bukan sekadar memotret. Techcam dirancang secara spesifik untuk inspektur mekanis. Metadata gambar dipertahankan cerdas antartangkapan sehingga teknisi tidak perlu berulang kali mengetik ID Unit atau lokasi inspeksi.</p>
             <a href="downloads/techcam%20v1.0.apk" download class="block text-center w-full bg-industrial text-dark font-bold py-3 rounded hover:bg-yellow-400 transition-colors btn-shadow">Mulai Unduh</a>
+        <!-- News Modal -->
+        <div id="modal-news" class="modal-content hidden bg-steel border border-steelLight p-6 md:p-8 rounded-lg max-w-2xl w-full mx-auto transform scale-95 transition-transform duration-300 my-auto shadow-2xl relative">
+            <div class="flex justify-between items-start mb-6 border-b border-steelLight pb-4">
+                <div>
+                    <div class="flex items-center gap-3 mb-2" id="modal-news-meta">
+                        <!-- Badge and Date injected here -->
+                    </div>
+                    <h3 id="modal-news-title" class="text-2xl md:text-3xl font-heading font-bold text-white">Judul Berita</h3>
+                </div>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-white p-1 bg-dark rounded mt-1 ml-4 flex-shrink-0"><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            
+            <div id="modal-news-content" class="text-gray-300 text-sm md:text-base leading-relaxed overflow-y-auto max-h-[60vh] pr-2 custom-scrollbar">
+                <!-- Full content injected here -->
+            </div>
         </div>
     </div>
 
