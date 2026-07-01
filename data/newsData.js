@@ -1,4 +1,4 @@
-[
+const newsData = [
     {
         "type": "Release Note",
         "date": "28 Juni 2026",
@@ -13,4 +13,4 @@
         "description": "Kami sedang mengembangkan versi desktop mandiri dari JSEA Maker menggunakan Electron.js untuk pengguna Windows dengan kapabilitas offline yang tangguh.",
         "link": "#"
     }
-]
+];

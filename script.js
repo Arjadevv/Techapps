@@ -189,36 +189,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const newsGrid = document.getElementById('news-grid');
     if (!newsGrid) return;
 
-    fetch('data/news.json')
-        .then(response => response.json())
-        .then(data => {
-            newsGrid.innerHTML = ''; // Hapus teks loading
-            data.forEach(item => {
-                let badgeClass = "bg-industrial/20 text-industrial";
-                if (item.type.toLowerCase() === 'roadmap') {
-                    badgeClass = "bg-blue-500/20 text-blue-400";
-                }
+    if (typeof newsData !== 'undefined') {
+        newsGrid.innerHTML = ''; // Hapus teks loading
+        newsData.forEach(item => {
+            let badgeClass = "bg-industrial/20 text-industrial";
+            if (item.type.toLowerCase() === 'roadmap') {
+                badgeClass = "bg-blue-500/20 text-blue-400";
+            }
 
-                const cardHTML = `
-                    <div class="bg-dark border border-steelLight rounded-lg p-6 hover:border-gray-500 transition-colors group cursor-pointer flex flex-col justify-between h-full">
-                        <div>
-                            <div class="flex items-center gap-3 mb-4">
-                                <span class="${badgeClass} text-xs font-bold px-2 py-1 rounded">${item.type}</span>
-                                <span class="text-xs text-gray-500">${item.date}</span>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3 group-hover:text-industrial transition-colors">${item.title}</h3>
-                            <p class="text-gray-400 text-sm mb-6">${item.description}</p>
+            const cardHTML = `
+                <div class="bg-dark border border-steelLight rounded-lg p-6 hover:border-gray-500 transition-colors group cursor-pointer flex flex-col justify-between h-full">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="${badgeClass} text-xs font-bold px-2 py-1 rounded">${item.type}</span>
+                            <span class="text-xs text-gray-500">${item.date}</span>
                         </div>
-                        <div class="mt-auto">
-                            <a href="${item.link}" class="text-sm font-medium text-industrial group-hover:underline">Baca selengkapnya</a>
-                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-industrial transition-colors">${item.title}</h3>
+                        <p class="text-gray-400 text-sm mb-6">${item.description}</p>
                     </div>
-                `;
-                newsGrid.innerHTML += cardHTML;
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching news:', error);
-            newsGrid.innerHTML = '<p class="text-gray-500">Gagal memuat berita terbaru.</p>';
+                    <div class="mt-auto">
+                        <a href="${item.link}" class="text-sm font-medium text-industrial group-hover:underline">Baca selengkapnya</a>
+                    </div>
+                </div>
+            `;
+            newsGrid.innerHTML += cardHTML;
         });
+    } else {
+        newsGrid.innerHTML = '<p class="text-gray-500">Gagal memuat berita terbaru.</p>';
+    }
 });
