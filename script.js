@@ -277,3 +277,48 @@ window.openNewsModal = function(index) {
     // Open Modal
     window.openModal('modal-news');
 }
+
+// --- Hero Slider Logic ---
+let currentSlide = 0;
+const totalSlides = 3;
+let slideInterval;
+
+window.moveSlider = function(direction) {
+    currentSlide += direction;
+    if (currentSlide >= totalSlides) currentSlide = 0;
+    if (currentSlide < 0) currentSlide = totalSlides - 1;
+    
+    updateSlider();
+    resetSlideInterval();
+}
+
+function updateSlider() {
+    const slider = document.getElementById('hero-slider');
+    if (slider) {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Update dots
+        const dots = document.querySelectorAll('.slider-dot');
+        dots.forEach((dot, index) => {
+            if (index === currentSlide) {
+                dot.classList.remove('bg-white/50', 'w-2');
+                dot.classList.add('bg-industrial', 'w-4');
+            } else {
+                dot.classList.add('bg-white/50', 'w-2');
+                dot.classList.remove('bg-industrial', 'w-4');
+            }
+        });
+    }
+}
+
+function resetSlideInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(() => {
+        moveSlider(1);
+    }, 4000);
+}
+
+// Initialize auto slide
+document.addEventListener('DOMContentLoaded', () => {
+    resetSlideInterval();
+});
