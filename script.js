@@ -37,34 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Accordion Logic ---
-    const accordions = document.querySelectorAll('.accordion-header');
-    accordions.forEach(acc => {
-        acc.addEventListener('click', function() {
-            // Toggle active class on button
-            this.classList.toggle('active');
-            this.classList.toggle('text-industrial');
-            
-            // Get the content panel
-            const panel = this.nextElementSibling;
-            
-            // Toggle panel height
-            if (panel.style.maxHeight) {
-                panel.style.maxHeight = null;
-            } else {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            }
+    // --- Accordion Logic (Dynamic via Event Delegation) ---
+    document.addEventListener('click', function(e) {
+        const accHeader = e.target.closest('.accordion-header');
+        if (!accHeader) return;
 
-            // Optional: Close other accordions
-            /*
-            accordions.forEach(otherAcc => {
-                if (otherAcc !== this) {
-                    otherAcc.classList.remove('active', 'text-industrial');
-                    otherAcc.nextElementSibling.style.maxHeight = null;
-                }
-            });
-            */
-        });
+        accHeader.classList.toggle('active');
+        accHeader.classList.toggle('text-industrial');
+        
+        const panel = accHeader.nextElementSibling;
+        
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        }
     });
 
     // --- Scroll Reveal Animation ---
@@ -183,6 +170,52 @@ window.triggerDownload = function(appName) {
         toast.classList.add('translate-y-20', 'opacity-0');
     }, 3000);
 }
+
+// --- Dynamic Guides Fetching ---
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof guidesData !== 'undefined') {
+        const tabs = ['techkit', 'techform', 'techcam'];
+        
+        tabs.forEach(tab => {
+            const container = document.getElementById(`tab-${tab}`);
+            if (container && guidesData[tab]) {
+                const data = guidesData[tab];
+                let faqsHTML = '';
+                
+                if (data.faqs && data.faqs.length > 0) {
+                    data.faqs.forEach(faq => {
+                        faqsHTML += `
+                            <div class="border border-steelLight rounded-md overflow-hidden bg-steel">
+                                <button class="accordion-header w-full flex justify-between items-center p-5 text-left focus:outline-none hover:bg-steelLight transition-colors">
+                                    <span class="font-bold text-lg">${faq.q}</span>
+                                    <svg class="w-5 h-5 text-industrial transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </button>
+                                <div class="accordion-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                                    <div class="p-5 border-t border-steelLight text-gray-400 text-sm leading-relaxed">
+                                        ${faq.a}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                const tabHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <div class="space-y-4">
+                            ${faqsHTML}
+                        </div>
+                        <div class="bg-steel border border-steelLight rounded-lg aspect-[4/3] flex flex-col items-center justify-center relative overflow-hidden group">
+                            <img src="${data.image}" alt="${data.alt}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" onerror="this.onerror=null; this.parentNode.innerHTML=\`<svg class='w-12 h-12 text-industrial mb-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'></path></svg><span class='text-gray-400 text-sm'>[Tempat Gambar ${data.alt}]</span>\`">
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML = tabHTML;
+            }
+        });
+    }
+});
 
 // --- Dynamic News Fetching ---
 document.addEventListener('DOMContentLoaded', () => {
