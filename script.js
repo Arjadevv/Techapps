@@ -302,10 +302,10 @@ function updateSlider() {
         dots.forEach((dot, index) => {
             if (index === currentSlide) {
                 dot.classList.remove('bg-white/50', 'w-2');
-                dot.classList.add('bg-industrial', 'w-4');
+                dot.classList.add('bg-industrial', 'w-6', 'shadow-[0_0_8px_rgba(255,192,0,0.6)]');
             } else {
                 dot.classList.add('bg-white/50', 'w-2');
-                dot.classList.remove('bg-industrial', 'w-4');
+                dot.classList.remove('bg-industrial', 'w-6', 'shadow-[0_0_8px_rgba(255,192,0,0.6)]');
             }
         });
     }
